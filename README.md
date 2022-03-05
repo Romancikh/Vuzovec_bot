@@ -1,9 +1,9 @@
 # Vuzovec_bot
 Telegram Bot, that helps with choosing university
 
-##Usage
+## Usage
 ```cmd
-https://github.com/Romancikh/Vuzovec_bot.git
+git clone https://github.com/Romancikh/Vuzovec_bot.git
 ```
 
 Move to work directory:
