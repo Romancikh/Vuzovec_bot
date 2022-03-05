@@ -9,7 +9,7 @@ git clone https://github.com/Romancikh/Vuzovec_bot.git
 
 Move to work directory:
 ```cmd
-cd ISPPR_bot
+cd Vuzovec_bot
 ```
 
 Create virtual enviroment:
