@@ -1,14 +1,15 @@
-# Vuzovec_bot
+# Vuzovec
 Telegram Bot, that helps with choosing university
 
-##Usage
+## Usage
+Clone repository:
 ```cmd
-https://github.com/Romancikh/Vuzovec_bot.git
+git clone https://github.com/Romancikh/Vuzovec_bot.git
 ```
 
 Move to work directory:
 ```cmd
-cd ISPPR_bot
+cd Vuzovec_bot
 ```
 
 Create virtual enviroment:
@@ -28,5 +29,5 @@ pip install -r requirements.txt
 
 Run bot:
 ```cmd
-python main.py
+python bot.py
 ```
