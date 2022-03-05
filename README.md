@@ -29,5 +29,5 @@ pip install -r requirements.txt
 
 Run bot:
 ```cmd
-python main.py
+python bot.py
 ```
