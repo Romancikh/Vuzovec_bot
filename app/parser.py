@@ -1,6 +1,5 @@
 import os
 import json
-import pprint
 
 import requests
 from bs4 import BeautifulSoup
@@ -47,20 +46,20 @@ def get_cities():
     if html.status_code == 200:
         soup = BeautifulSoup(html.text, 'html.parser')
         items = soup.find_all("div", class_="first")
-        cities = []
+        cities_list = []
         for item in items[1:]:
-            cities.append({
+            cities_list.append({
                 "name": item.find("div", class_="label-value").get_text(strip=True),
                 "link": "https:" + item.find("div", class_="label-value").find_next("a").get('href')
             })
-        return sorted(cities, key=lambda x: x.get("name"))
+        return sorted(cities_list, key=lambda x: x.get("name"))
 
 
-def add_cities_info(cities):
+def add_cities_info(cities_list):
     global data
-    for city in cities:
+    for city in cities_list:
         data[city.get("name")] = {}
-    return cities
+    return cities_list
 
 
 def get_page_universities(html):
@@ -298,19 +297,14 @@ def add_university_specialities_info(specialities, university, city):
                         if speciality.get(key) > old_spec.get(key):
                             old_spec[key] = speciality.get(key)
                 else:
-                    data[city.get("name")][university.get("name")
-                    ][speciality.get("id")] = delete_id(speciality)
-                spec = data[city.get("name")][university.get(
-                    "name")][speciality.get("id")]
+                    data[city.get("name")][university.get("name")][speciality.get("id")] = delete_id(speciality)
+                spec = data[city.get("name")][university.get("name")][speciality.get("id")]
                 if spec.get("budget_place") == 0 and spec.get("contractual_place") == 0:
-                    data[city.get("name")][university.get(
-                        "name")].pop(speciality.get("id"))
+                    data[city.get("name")][university.get("name")].pop(speciality.get("id"))
                 elif spec.get("budget_points") == 0 and spec.get("contractual_points") == 0:
-                    data[city.get("name")][university.get(
-                        "name")].pop(speciality.get("id"))
+                    data[city.get("name")][university.get("name")].pop(speciality.get("id"))
                 elif not spec.get("ege_subjects"):
-                    data[city.get("name")][university.get(
-                        "name")].pop(speciality.get("id"))
+                    data[city.get("name")][university.get("name")].pop(speciality.get("id"))
         try:
             if len(data[city.get("name")][university.get("name")].keys()) == 5:
                 data[city.get("name")].pop(university.get("name"))
@@ -361,17 +355,22 @@ def remove_zero_price():
                         data[city][university][specialty]["price"] = average_price
 
 
+def load_cities():
+    with open("config/cities.json", "r") as read_file:
+        cities_list = json.load(read_file)
+        return cities_list
+
+
+def save_cities():
+    global cities
+    cities = get_cities()
+    move_capital()
+    with open("config/cities.json", "w") as cities_list:
+        json.dump(cities, cities_list, indent=4)
+
+
 def check():
-    cities = add_cities_info(get_cities())
-    for city in cities[42:43]:
-        print("\n" + city.get("name") + "\n" + "=" * 30)
-        universities = add_city_universities_info(get_city_universities(city), city)
-        for university in universities:
-            add_university_specialities_info(get_university_specialities(university), university, city)
-    remove_zero_price()
-    for city in data.keys():
-        if data.get(city):
-            pprint.pprint(data.get(city))
+    pass
 
 
 def main():
@@ -393,6 +392,8 @@ else:
         print("Start parsing")
         main()
         print("Finish parsing")
-    else:
-        cities = get_cities()
-    move_capital()
+    if "cities.json" not in os.listdir("config"):
+        print("Start cities parsing")
+        save_cities()
+        print("Finish parsing")
+    cities = load_cities()
