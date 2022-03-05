@@ -528,7 +528,6 @@ async def finding_sphere(message: types.Message, state: FSMContext):
 
 
 async def sphere_answer_handler(message: types.Message, state: FSMContext):
-    answer = message.text.lower()
     data = await state.get_data()
     sphere_test = data.get("sphere_test")
     answer = message.text.replace(",", " ")
@@ -1019,7 +1018,7 @@ def register_handlers_question(dp: Dispatcher):
     dp.register_callback_query_handler(select_all_cities, text="select_all_cities", state=TestQuestions.city_input)
     dp.register_callback_query_handler(collapse_the_list, text="collapse_the_list", state="*")
     dp.register_callback_query_handler(print_result_city_list, text="print_result_city_list",
-                                       state=TestQuestions.reputation_decision)
+                                       state=TestQuestions.result)
 
     dp.register_callback_query_handler(callback_query_handler, state=TestQuestions.result)
     dp.register_message_handler(cmd_back, commands="back", state="*")
