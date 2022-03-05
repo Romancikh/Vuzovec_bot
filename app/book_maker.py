@@ -1,6 +1,9 @@
 import xlsxwriter as xw
 from datetime import date
+import os
 
+if 'user_books' not in os.listdir('app/'):
+    os.mkdir('app/user_books/')
 FOLDER = "app/user_books/"
 
 
@@ -180,7 +183,7 @@ def make_book(user_data: str, specialties: dict):
     worksheet.protect("2180")
     worksheet.hide_gridlines(2)
     line = header(user_data, worksheet, format)
-    body_line= body(specialties, worksheet, format)
+    body_line = body(specialties, worksheet, format)
     footer(worksheet, format, line, body_line)
     worksheet.set_default_row(hide_unused_rows=True)
     workbook.close()
