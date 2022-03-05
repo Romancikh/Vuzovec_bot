@@ -1,7 +1,8 @@
-# Vuzovec_bot
+# Vuzovec
 Telegram Bot, that helps with choosing university
 
 ## Usage
+Clone repository:
 ```cmd
 git clone https://github.com/Romancikh/Vuzovec_bot.git
 ```
